@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+
+    <div class="col-lg-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">View Complaint Details</h4>
+          {% include 'includes/messages.html' %}
+          <table class="table table-bordered">
+            <thead>
+                  
+            </thead>
+            <tbody>
+              {% for i in complaints %}
+                    <tr>
+                        <td><b>Complaint Number</b></td>
+                        <td>{{i.complaint_number}}</td>
+                        <td><b>Complainant Name</b></td>
+                        <td> {{ i.userregid.admin.first_name }} {{ i.userregid.admin.last_name }}</td>
+                        <td><b>Reg Date</b></td>
+                        <td>{{i.complaintdate_at}}
+                        </td>
+                    </tr>
+
+<tr>
+                        <td><b>Category </b></td>
+                        <td>{{i.cat_id.catname}}</td>
+                        <td><b>SubCategory</b></td>
+                        <td>{{i.subcategory_id.subcatname}}</td>
+                        <td><b>Complaint Type</b></td>
+                        <td>{{i.complainttype}}
+                        </td>
+                    </tr>
+<tr>
+                        <td><b>State </b></td>
+                        <td>{{i.stateid.statename}}</td>
+                        <td ><b>Nature of Complaint</b></td>
+                        <td colspan="3"> {{i.noc}}</td>
+
+                    </tr>
+<tr>
+                        <td><b>Complaint Details </b></td>
+
+                        <td colspan="5"> {{i.complaindetails}}</td>
+
+                    </tr>
+
+                        </tr>
+<tr>
+    <td><b>File(if any) </b></td>
+    {% if i.compfile == '' %}
+        <td colspan="5">NA</td>
+    {% else %}
+        <td colspan="5"><a href="{{ i.compfile.url }}" target="_blank">View File</a></td>
+    {% endif %}
+</tr>
+
+<tr>
+<td><b>Final Status</b></td>
+
+                        <td colspan="5">
+                          {% if i.status == '0' %}
+    <span class="badge badge-danger">Not Processed Yet</span>
+{% elif i.status == 'Inprocess' %}
+    <span class="badge badge-warning">In Process</span>
+{% elif i.status == 'Closed' %}
+    <span class="badge badge-success">Closed</span>
+{% endif %}</td>
+
+                    </tr>
+
+<hr>
+
+<!---- Complaint History--->
+
+
+
+
+<tr>
+  <th>S.No</th>
+  <th colspan="4">Remark</th>
+  <th>Status</th>
+  <th>Updation Date</th>
+</tr>
+
+{% for remark in complaintsremarks %}
+<tr>
+    <td>{{ forloop.counter }}</td>
+    <td colspan="4">{{ remark.remark }}</td>
+    <td>{{ remark.status }}</td>
+    <td>{{ remark.remarkdate }}</td>
+</tr>
+{% endfor %}
+
+
+
+
+            </tbody>
+        </table>
+        {% if i.status == '0' or i.status == 'Inprocess' %}
+
+
+              <p align="center"  style="padding-top: 20px">
+                <button class="btn btn-primary waves-effect waves-light w-lg" data-toggle="modal" data-target="#myModal">Take Action</button></p>{% endif %}
+              <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                   <div class="modal-content">
+                    <div class="modal-header">
+                                                                  <h5 class="modal-title" id="exampleModalLabel">Take Action</h5>
+                                                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                      <span aria-hidden="true">&times;</span>
+                                                                  </button>
+                                                              </div>
+                                                              <div class="modal-body">
+
+<form method="POST" action="{% url 'lodgedcomplaintremark' %}">
+  {% csrf_token %}
+  <div class="modal-body">
+      <table class="table table-bordered table-hover data-tables">
+          <tr>
+              <th>Remark :</th>
+              <td>
+                  <textarea name="remark" placeholder="Admin Remark" rows="5" cols="100" class="form-control wd-850" required="true"></textarea>
+                  <input type="hidden" value="{{ i.id }}" name="comp_id" id="comp_id" class="form-control" required="">
+              </td>
+          </tr>
+          <tr>
+              <th>Status :</th>
+              <td>
+                  <select name="status" class="form-control wd-450" required="true">
+                      <option value="" selected="true">Select Status</option>
+                      <option value="Inprocess">Inprocess</option>
+                      <option value="Closed">Closed</option>
+                  </select>
+              </td>
+          </tr>
+      </table>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      <button type="submit" class="btn btn-primary">Update</button>
+  </div>
+</form>
+
+              </div>
+
+
+                                      </div>
+                                  </div>
+
+                          </div>
+        </div>
+
+      </div>
+    </div>
+
+    {% endfor %}
+  </div>
+  {% endblock %}

@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Complaint Registration Form</h4>
+         <hr>
+          <form class="forms-sample" method="POST" action="{% url 'regcomplaint' %}" enctype="multipart/form-data">
+            {% include 'includes/messages.html' %}
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="exampleInputUsername1">Select Category Name</label>
+              <select name="cat_id" class="form-control" required="true" id="category">
+              
+                <option value="">Select Category</option>
+                {% for i in category %}
+                 
+                <option value="{{i.id}}">{{i.catname}}</option>{% endfor %}
+              </select>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputUsername1">Subcategory Name</label>
+                <select class="form-control form-control-rounded" name="subcategory_id" id="subcategory" required="required">
+                    <option value="">Select Subcategory</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputUsername1">Complaint Type</label>
+                <select class="form-control form-control-rounded" name="complainttype" id="complainttype" required="required">
+                    <option value="">Select Complaint Type</option>
+                    <option value="Complaint">Complaint</option>
+                    <option value="General Query">General Query</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputUsername1">Select State</label>
+                <select name="stateid" class="form-control" required="true" id="stateid">
+                
+                  <option value="">Select State</option>
+                  {% for i in state %}
+                   
+                  <option value="{{i.id}}">{{i.statename}}</option>{% endfor %}
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputUsername1">Nature of Complaint</label>
+                <input type="text" placeholder="Enter Nature of Complaint"  name="noc" class="form-control" required="true">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputUsername1">Complaint Details (max 2000 words)</label>
+                <textarea  name="complaindetails" required="required" cols="10" rows="10" class="form-control" maxlength="2000"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputUsername1">Complaint Related Doc(if any)</label>
+                <input type="file" name="compfile" class="form-control" value="">
+              </div>
+          
+           
+            <button type="submit" class="btn btn-primary mr-2">Submit</button>
+            
+          </form>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+ $(document).ready(function() {
+    $('#category').change(function() {
+        var cid = $(this).val();
+        $.ajax({
+            url: '/get_subcat/',
+            type: 'GET',
+            data: {
+                'c_id': cid
+            },
+            success: function(data) {
+                
+                var subcatoptions = data.subcat_options;
+                
+                $('#subcategory').html(subcatoptions);
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+              
+            }
+        });
+    });
+});
+
+    </script>
+    {% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-6 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Add State</h4>
+         <hr>
+          <form class="forms-sample" method="POST" action="{% url 'add_state' %}">
+            {% include 'includes/messages.html' %}
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="exampleInputUsername1">State Name</label>
+              <input type="text"placeholder="Enter State Name"  name="statename" class="form-control" required="true">
+            </div>
+            <button type="submit" class="btn btn-primary mr-2">Add</button>
+            
+          </form>
+        </div>
+      </div>
+    </div>
+    </div>
+    {% endblock %}

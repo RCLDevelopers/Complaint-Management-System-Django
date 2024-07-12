@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-6 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Update State</h4>
+         <hr>
+          <form class="forms-sample" method="POST" action="{% url 'update_state_details' %}">
+            {% include 'includes/messages.html' %}
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="exampleInputUsername1">State Name</label>
+              <input type="text" name="statename" class="form-control" required="true" value="{{state.statename}}">
+              <input type="hidden" name="state_id" class="form-control" id="state_id" required="true" value="{{state.id}}">
+            </div>
+            <button type="submit" class="btn btn-primary mr-2">Update</button>
+            
+          </form>
+        </div>
+      </div>
+    </div>
+    </div>
+    {% endblock %}

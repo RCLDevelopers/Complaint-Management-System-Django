@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-6 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Update Subcategory</h4>
+         <hr>
+          <form class="forms-sample" method="POST" action="{% url 'update_subcategory_details' %}">
+            {% include 'includes/messages.html' %}
+            {% csrf_token %}
+            <div class="form-group">
+                <input type="hidden" name="subcat_id" class="form-control" id="subcat_id" required="true" value="{{subcategory.id}}">
+              <label for="exampleInputUsername1">Select Category Name</label>
+              <select name="cat_id" class="form-control" required="true">
+              
+                <option value="{{subcategory.cat_id}}">{{subcategory.cat_id.catname}}</option>
+                {% for i in category %}
+                 
+               
+                <option value="{{ i.id }}" {% if i.id == subcategory.cat_id.id %} selected {% endif %}>{{ i.catname }}</option>
+                {% endfor %}
+              </select>
+             
+            </div>
+            <div class="form-group">
+                <label for="exampleInputUsername1">Subcategory Name</label>
+                <input type="text" placeholder="Enter Subcategory Name"  name="subcatname" class="form-control" required="true" value="{{subcategory.subcatname}}">
+              </div>
+          
+           
+            <button type="submit" class="btn btn-primary mr-2">Update</button>
+            
+          </form>
+        </div>
+      </div>
+    </div>
+    </div>
+    {% endblock %}

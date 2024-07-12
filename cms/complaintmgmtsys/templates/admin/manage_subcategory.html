@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+
+    <div class="col-lg-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Manage Subcategory</h4>
+          {% include 'includes/messages.html' %}
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th style="font-weight: bolder;"> # </th>
+                <th style="font-weight: bolder;"> Category Name</th>
+                <th style="font-weight: bolder;"> Subcategory Name</th>
+                <th style="font-weight: bolder;"> Creation Date </th>
+                <th style="font-weight: bolder;"> Updated Date </th>
+                <th style="font-weight: bolder;">Action </th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for i in subcategories %}
+              <tr>
+                <td> {{ forloop.counter }} </td>
+                <td>{{i.cat_id.catname}}</td>
+                <td>{{i.subcatname}}</td>
+                <td>{{i.created_at}}</td>
+                <td>{{i.updated_at}}</td>
+                <td><a href="{% url 'update_subcategory' i.id %}" class="btn btn-success">
+                    EDIT</a> <a href="{% url 'delete_subcategory' i.id %}" class="btn btn-danger">
+                        DELETE</a></td>
+              </tr>{% endfor %}
+           
+            </tbody>
+          </table>
+          <div class="pagination" style="padding-top: 10px;text-align: center;">
+            <span class="step-links">
+                {% if subcategories.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ subcategories.previous_page_number }}">previous</a>
+                {% endif %}
+        
+                <span class="current">
+                    Page {{ subcategories.number }} of {{ subcategories.paginator.num_pages }}.
+                </span>
+        
+                {% if subcategories.has_next %}
+                    <a href="?page={{ subcategories.next_page_number }}">next</a>
+                    <a href="?page={{ subcategories.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+        </div>
+        
+      </div>
+    </div>
+    
+    
+  </div>
+  {% endblock %}

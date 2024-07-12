@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-6 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Update Category</h4>
+         <hr>
+          <form class="forms-sample" method="POST" action="{% url 'update_category_details' %}">
+            {% include 'includes/messages.html' %}
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="exampleInputUsername1">Category Name</label>
+              <input type="text" name="catname" class="form-control" required="true"  value="{{category.catname}}">
+              
+              <input type="hidden" name="cat_id" class="form-control" id="cat_id" required="true" value="{{category.id}}">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Description</label>
+              <textarea  name="catdes" class="form-control" >{{category.catdes}}</textarea>
+            </div>
+          
+           
+            <button type="submit" class="btn btn-primary mr-2">Update</button>
+            
+          </form>
+        </div>
+      </div>
+    </div>
+    </div>
+    {% endblock %}

@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+
+    <div class="col-lg-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Closed Complaint</h4>
+          {% include 'includes/messages.html' %}
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th style="font-weight: bolder;"> # </th>
+                <th style="font-weight: bolder;"> Complaint No</th>
+                <th style="font-weight: bolder;"> Complainant Name</th>
+               <th style="font-weight: bolder;"> Complainant Mobile Number</th>
+                <th style="font-weight: bolder;"> Complaint Lodged Date </th>
+                <th style="font-weight: bolder;"> Status </th>
+                <th style="font-weight: bolder;">Action </th>
+              </tr>
+            </thead>
+            <tbody>
+                
+                {% for i in closed_complaints %}
+                
+              <tr>
+                <td> {{ forloop.counter }}</td>
+                <td>{{i.complaint_number}}</td>
+                <td>{{ i.userregid.admin.first_name }} {{ i.userregid.admin.last_name }}</td>
+                <td>{{i.userregid.mobilenumber}}</td>
+                <td>{{i.complaintdate_at}}</td>
+                <td>{% if i.status == '0' %}
+                    <span class="badge badge-danger">Not Processed Yet</span>
+                {% elif i.status == 'Inprocess' %}
+                    <span class="badge badge-warning">In Process</span>
+                {% elif i.status == 'Closed' %}
+                    <span class="badge badge-success">Closed</span>
+                {% endif %}</td>
+                <td><a href="{% url 'viewlodgedcomplaint' i.id %}" class="btn btn-success">
+                    View</a></td>
+              </tr>{% endfor %}
+              
+            </tbody>
+          </table>
+          <div class="pagination" style="padding-top: 10px;text-align: center;">
+            <span class="step-links">
+                {% if complaints.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ complaints.previous_page_number }}">previous</a>
+                {% endif %}
+        
+                <span class="current">
+                    Page {{ complaints.number }} of {{ complaints.paginator.num_pages }}.
+                </span>
+        
+                {% if complaints.has_next %}
+                    <a href="?page={{ complaints.next_page_number }}">next</a>
+                    <a href="?page={{ complaints.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+        </div>
+        
+      </div>
+    </div>
+    
+    
+  </div>
+  {% endblock %}

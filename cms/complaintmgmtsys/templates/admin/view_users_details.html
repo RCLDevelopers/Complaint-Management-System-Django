@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+
+    <div class="col-lg-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">View Users Details</h4>
+          {% include 'includes/messages.html' %}
+          <table class="table table-bordered">
+            <thead>
+                  
+            </thead>
+            <tbody>
+                                                
+                    <tr>
+                        <td><b>User Name</b></td>
+                        <td>{{listedusers.admin.first_name}} {{listedusers.admin.last_name}}</td>
+                        <td><b>Email</b></td>
+                        <td> {{listedusers.admin.email}}</td>
+                       
+                        </td>
+                    </tr>
+                    <tr><td><b>Profile Pic</b></td>
+                        <td colspan="4"><img src="{{ listedusers.admin.profile_pic.url }}" alt="Profile Picture"></td></tr>
+
+<tr>
+                        <td><b>Contact Number </b></td>
+                        <td>{{listedusers.mobilenumber}}</td>
+                        <td><b>Regsitration Date</b></td>
+                        <td>{{listedusers.regdate_at}}</td>
+                        
+                    </tr>
+
+
+                        
+</tbody></table>
+
+
+
+<hr>
+
+<!---- Complaint History--->
+
+
+
+</tbody
+
+              
+        </div>
+        
+      </div>
+    </div>
+    
+    
+  </div>
+  {% endblock %}

@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+
+    <div class="col-lg-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">View Complaint Details</h4>
+          {% include 'includes/messages.html' %}
+          <table class="table table-bordered">
+            <thead>
+                  
+            </thead>
+            <tbody>
+                                                
+                    <tr>
+                        <td><b>Complaint Number</b></td>
+                        <td>{{complaints.complaint_number}}</td>
+                        <td><b>Complainant Name</b></td>
+                        <td> {{complaints.userregid.admin.first_name}} {{complaints.userregid.admin.last_name}}</td>
+                        <td><b>Reg Date</b></td>
+                        <td>{{complaints.complaintdate_at}}
+                        </td>
+                    </tr>
+
+<tr>
+                        <td><b>Category </b></td>
+                        <td>{{complaints.cat_id.catname}}</td>
+                        <td><b>SubCategory</b></td>
+                        <td>{{complaints.subcategory_id.subcatname}}</td>
+                        <td><b>Complaint Type</b></td>
+                        <td>{{complaints.complainttype}}
+                        </td>
+                    </tr>
+<tr>
+                        <td><b>State </b></td>
+                        <td>{{complaints.stateid.statename}}</td>
+                        <td ><b>Nature of Complaint</b></td>
+                        <td colspan="3"> {{complaints.noc}}</td>
+                        
+                    </tr>
+<tr>
+                        <td><b>Complaint Details </b></td>
+                        
+                        <td colspan="5"> {{complaints.complaindetails}}</td>
+                        
+                    </tr>
+
+                        </tr>
+<tr>
+    <td><b>File(if any) </b></td>
+    {% if i.compfile == '' %}
+        <td colspan="5">NA</td>
+    {% else %}
+        <td colspan="5"><a href="{{ i.compfile.url }}" target="_blank">View File</a></td>
+    {% endif %}
+</tr>
+
+<tr>
+  <td><b>Final Status</b></td>
+                        
+  <td colspan="5">  
+    {% if complaints.status == '0' %}
+<span class="badge badge-danger">Not Processed Yet</span>
+{% elif complaints.status == 'Inprocess' %}
+<span class="badge badge-warning">In Process</span>
+{% elif complaints.status == 'Closed' %}
+<span class="badge badge-success">Closed</span>
+{% endif %}</td>
+                        
+                    </tr>
+
+<hr>
+
+<!---- Complaint History--->
+
+
+
+
+<tr>
+  <th>S.No</th>
+  <th colspan="3">Remark</th>
+  <th>Status</th>
+  <th>Updation Date</th>
+</tr>
+
+{% for remark in complaintsremarks %}
+<tr>
+    <td>{{ forloop.counter }}</td>
+    <td colspan="4">{{ remark.remark }}</td>
+    <td>{{ remark.status }}</td>
+    <td>{{ remark.remarkdate }}</td>
+</tr>
+{% endfor %}
+
+
+
+
+                    
+               
+            </tbody>
+        </table>  
+        </div>
+        
+      </div>
+    </div>
+    
+    
+  </div>
+  {% endblock %}

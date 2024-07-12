@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-6 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Add Category</h4>
+         <hr>
+          <form class="forms-sample" method="POST" action="{% url 'add_category' %}">
+            {% include 'includes/messages.html' %}
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="exampleInputUsername1">Category Name</label>
+              <input type="text"placeholder="Enter category Name"  name="catname" class="form-control" required="true">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Description</label>
+              <textarea  name="catdes" class="form-control" ></textarea>
+            </div>
+          
+           
+            <button type="submit" class="btn btn-primary mr-2">Add</button>
+            
+          </form>
+        </div>
+      </div>
+    </div>
+    </div>
+    {% endblock %}
